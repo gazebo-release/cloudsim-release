@@ -26,7 +26,7 @@ case "$1" in
 	[[ ! -f ${CL_DEST_AUTH}/users ]] && cp ${CL_BASE}/distfiles/users ${CL_DEST_AUTH}
 
 	# Set up the apache configuration
-	cp ${CL_BASE}/distfiles/apache2.conf /etc/apache2/sites-available/cloudsim.conf
+	cp ${CL_BASE}/distfiles/apache2.conf /etc/apache2/sites-available/00-default-cloudsim
 	apache2ctl restart
     ;;
 
@@ -37,4 +37,5 @@ case "$1" in
         echo "postinst called with unknown argument '$1'" >&2
         exit 1
     ;;
+esac
 exit 0
