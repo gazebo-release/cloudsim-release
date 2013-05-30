@@ -18,6 +18,7 @@ Depends: python2.7,
          redis-server, 
          libhiredis0.10,
          zip,
+         apache2,
          ${misc:Depends}
 Description: web application designed to run robotic tools in the cloud
  CloudSim is an open source web application that launches pre-configured machines designed to run many of the most common open source robotic tools, especially the open source robotics simulator Gazebo.
