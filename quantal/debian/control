@@ -1,0 +1,23 @@
+Source: cloudsim
+Standards-Version: 3.9.3
+Maintainer: Hugo Boyer <hugo@osrfoundation.org>
+Section: devel
+Priority: extra
+Build-Depends: cmake, 
+               debhelper (>= 8.0.50~), 
+               python2.7,
+               libhiredis-dev
+Homepage: http://gazebosim.org/wiki/CloudSim
+
+Package: cloudsim
+Architecture: any
+Section: devel
+Priority: extra
+Depends: python2.7,
+         python-redis, 
+         redis-server, 
+         libhiredis0.10,
+         ${misc:Depends}
+Description: web application designed to run robotic tools in the cloud
+ CloudSim is an open source web application that launches pre-configured machines designed to run many of the most common open source robotic tools, especially the open source robotics simulator Gazebo.
+Homepage: http://gazebosim.org/wiki/CloudSim

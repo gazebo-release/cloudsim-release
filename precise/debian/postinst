@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# TODO: what to do with flush the redis database
+# TODO: what to do with credentials
+set -e
+
+CL_BASE="/usr/share/cloudsim"
+CL_DEST="/var/www/cloudsim"
+CL_DEST_AUTH="/var/www-cloudsim-auth"
+
+case "$1" in
+    configure)	
+	# Install on /var/www/cloudsim
+	rm -fr /var/www/cloudsim
+	cp -a ${CL_BASE} ${CL_DEST}
+	rm -fr ${CL_DEST}/distfiles
+	chown -R www-data ${CL_DEST}
+
+	# Install www-cloudsim-auth
+        mkdir -p ${CL_DEST_AUTH}/machines
+
+	# Ask what is this doing?
+	zip -r ${CL_DEST_AUTH}/cloudsim.zip ${CL_BASE}
+
+	# Install users file if there is none
+	[[ ! -f ${CL_DEST_AUTH}/users ]] && cp ${CL_BASE}/distfiles/users ${CL_DEST_AUTH}
+
+	# Set up the apache configuration
+	cp ${CL_BASE}/distfiles/apache2.conf /etc/apache2/sites-available/cloudsim.conf
+	apache2ctl restart
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument '$1'" >&2
+        exit 1
+    ;;
+exit 0

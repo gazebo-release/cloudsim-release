@@ -1,0 +1,9 @@
+distfiles /usr/share/cloudsim
+tools /usr/share/cloudsim
+bin /usr/share/cloudsim
+js /usr/share/cloudsim
+yaml /usr/share/cloudsim
+inside /usr/share/cloudsim
+cloudsimd /usr/share/cloudsim
+
+cloudsimd /var/cloudsimd
