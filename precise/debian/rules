@@ -17,7 +17,7 @@ override_dh_install:
 
 override_dh_installinit:
 	# Install the upstart file
-	cp $(CURDIR)/cloudsimd/cloudsimd.conf $(CURDIR)/debian/package.upstart
+	cp $(CURDIR)/cloudsimd/cloudsimd.conf $(CURDIR)/debian/cloudsim.upstart
 	dh_installinit
 
 override_dh_auto_test:
