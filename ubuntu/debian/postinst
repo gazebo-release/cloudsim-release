@@ -2,16 +2,26 @@
 #
 # TODO: what to do with flush the redis database
 # TODO: what to do with credentials
+# TODO: fix the overwrite of /var/www
 set -e
 
 CL_BASE="/usr/share/cloudsim"
-CL_DEST="/var/www/cloudsim"
+CL_DEST="/var/www"
 CL_DEST_AUTH="/var/www-cloudsim-auth"
 
 case "$1" in
     configure)	
+	# Back the old /var/www
+	if [[ -d ${CL_DEST} ]]; then
+   	  for i in `seq 1 100`; do
+  	     if [[ ! -d "${CL_DEST}.backup${i}" ]]; then
+	       mv ${CL_DEST} "${CL_DEST}.backup${i}"
+               break
+             fi
+          done
+	fi
 	# Install on /var/www/cloudsim
-	rm -fr /var/www/cloudsim
+	rm -fr ${CL_DEST}
 	cp -a ${CL_BASE} ${CL_DEST}
 	rm -fr ${CL_DEST}/distfiles
 	chown -R www-data ${CL_DEST}
@@ -26,7 +36,17 @@ case "$1" in
 	[[ ! -f ${CL_DEST_AUTH}/users ]] && cp ${CL_BASE}/distfiles/users ${CL_DEST_AUTH}
 
 	# Set up the apache configuration
-	cp ${CL_BASE}/distfiles/apache2.conf /etc/apache2/sites-available/00-default-cloudsim
+        if [[ -f  /etc/apache2/apache2.conf ]]; then
+	   for i in `seq 1 100`; do
+              backup_file=/etc/apache2/apache2.conf.backup${i}
+              if [[ -f "$backup_file" ]]; then
+	        echo "Backup apache file to $backup_file"
+	        mv /etc/apache2/apache2.conf $backup_file
+                break
+              fi
+	   done
+        fi
+	cp ${CL_BASE}/distfiles/apache2.conf /etc/apache2/apache2.conf
 	apache2ctl restart
     ;;
 
